@@ -13,15 +13,15 @@ exports.userRegister = catchAsyncError(async (req, res, next) => {
     if (user_exists && user_exists.email_verified) {
         return next(new ErrorHandling("User Already Exists.", 400))
     } else if (user_exists && user_exists.email_token) {
-        const token = uuidv4();
-        const data = await Users.update({email_token:token}, { where: { id: user_exists.id } })
-        const data1 = await verifyEmail(user_exists.username,user_exists.email,token)
+        const token = Math.floor(100000 + Math.random() * 900000);
+        const data = await Users.update({ email_token: token }, { where: { id: user_exists.id } })
+        const data1 = await verifyEmail(user_exists.username, user_exists.email, token)
         res.status(200).json({ message: "Kindly Verify Your Mail." })
     } else {
-        const token = uuidv4();
+        const token = Math.floor(100000 + Math.random() * 900000);;
         const data = await Users.create({ username, email, gender: "MALE", password, user_type: "CUSTOMER", phone, email_token: token, email_verified: 0 });
         const new_data = await Users.findOne({ where: { email } })
-        const data1 = await verifyEmail(username,email,token)
+        const data1 = await verifyEmail(username, email, token)
         res.status(200).json({ message: "Kindly Verify Your Mail" })
     }
 })
@@ -51,7 +51,7 @@ exports.userLogin = catchAsyncError(async (req, res, next) => {
 
 exports.adminLogin = catchAsyncError(async (req, res, next) => {
     const { email, password } = req.body;
-    const user_exists = await Users.findOne({ where: { email: email,user_type:"ADMIN" } })
+    const user_exists = await Users.findOne({ where: { email: email, user_type: "ADMIN" } })
     if (user_exists) {
         if (user_exists.password != password) {
             return next(new ErrorHandling("Invalid Credentials", 400))
@@ -92,28 +92,53 @@ exports.resetPassword = catchAsyncError(async (req, res, next) => {
 
 
 exports.emailVerify = catchAsyncError(async (req, res, next) => {
-    const { token } = req.query;
-    const data = await Users.findOne({ where: { email_token: token } });
+    const { token, email } = req.body;
+    const data = await Users.findOne({ where: { email: email } });
     if (!data) {
         return new ErrorHandling("User Not Found.", 401)
     } else {
-        const data = await Users.update({ emailVerified: 1 }, { where: { id: data.id } });
-        return res.status(200).json({ message: "Sucessfully Verified." })
+        if (token === data.email_token) {
+            await Users.update({ email_verified: 1 }, { where: { id: data.id } });
+
+            const token = jwt.sign(
+                { id: data.id, email, user_type: data.user_type },
+                process.env.JWT_SECRET,
+                {
+                    expiresIn: "12h",
+                }
+            );
+            res.status(200).json({ message: token })
+        }
+        return new ErrorHandling("Invalid OTP.", 401)
     }
 })
 
-exports.forgotPassword = catchAsyncError(async(req,res,next)=>{
-    const {email} = req.body;
+exports.resendOtp = catchAsyncError(async (req, res, next) => {
+    const { email } = req.body;
+    const data = await Users.findOne({ where: { email: email } });
+    if (!data) {
+        return new ErrorHandling("User Not Found.", 401)
+    } else {
+        const token = Math.floor(100000 + Math.random() * 900000);
+        await Users.update({ email_token: token }, { where: { id: data.id } })
+        const data1 = await verifyEmail(data.username, data.email, token)
+        res.status(200).json({ message: "Email Sent Successfully." })
+    }
+})
+
+
+exports.forgotPassword = catchAsyncError(async (req, res, next) => {
+    const { email } = req.body;
     const token = uuidv5();
-    const data1 = await Users.update({email_token:token}, { where: { email } })
-    const data = await forgotPasswordMail(email,token);
+    const data1 = await Users.update({ email_token: token }, { where: { email } })
+    const data = await forgotPasswordMail(email, token);
     return res.status(200).json({ message: "Sucessfully Email Sent." })
 })
 
-exports.forgotPassword = catchAsyncError(async(req,res,next)=>{
-    const {password,email_token} = req.body;
-    const data = await Users.findOne({email_token});
-    const data1 = await Users.update({password}, { where: {id: data.id } })
+exports.forgotPassword = catchAsyncError(async (req, res, next) => {
+    const { password, email_token } = req.body;
+    const data = await Users.findOne({ email_token });
+    const data1 = await Users.update({ password }, { where: { id: data.id } })
     return res.status(200).json({ message: "Sucessfully Updated." })
 })
 

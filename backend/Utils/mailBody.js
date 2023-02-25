@@ -217,22 +217,13 @@ exports.verifyEmail = async (name, email, token) => {
                             <w:anchorlock/>
                             <center style="color:#ffffff;font-family:sans-serif;font-size:15px;">ईमेल पुष्टि करें</center>
                           </v:roundrect><![endif]-->
-                            <a href="http://locahost:3000/emailverify/${token}" class="button button--blue">ईमेल पुष्टि करें</a>
+                            <a  class="button button--blue">${token}</a>
                           </div>
                         </td>
                       </tr>
                     </table>
                     <p>धन्यवाद,<br>प्रेमसुधा टीम</p>
                     <!-- Sub copy -->
-                    <table class="body-sub">
-                      <tr>
-                        <td>
-                          <p class="sub">यदि आपको बटन क्लिक करने में समस्या हो रही है, तो नीचे दिए गए URL को अपने वेब ब्राउज़र में कॉपी और पेस्ट करें।
-                          </p>
-                          <p class="sub"><a href="http://locahost:3000/emailverify/${token}">http://locahost:3000/emailverify/${token}</a></p>
-                        </td>
-                      </tr>
-                    </table>
                   </td>
                 </tr>
               </table>

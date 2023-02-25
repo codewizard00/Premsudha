@@ -1,5 +1,5 @@
 const express = require('express');
-const { userRegister, userLogin, getAllUser, resetPassword, emailVerify, forgotPassword, adminLogin } = require('../Controller/userController');
+const { userRegister, userLogin, getAllUser, resetPassword, emailVerify, forgotPassword, adminLogin, resendOtp } = require('../Controller/userController');
 const { authenticateJWT } = require('../Middleware/authentication');
 const Validation = require('../Middleware/ValidationMiddleware')
 
@@ -14,7 +14,9 @@ router.post('/admin/login', Validation('loginSchema'), adminLogin);
 
 router.get('/getAllUser', authenticateJWT('ADMIN'), getAllUser);
 
-router.get('/emailVerify/:token', emailVerify);
+router.post('/emailVerify', emailVerify);
+
+router.post("/resendOtp",resendOtp);
 
 router.post("/forgot/password", forgotPassword)
 
