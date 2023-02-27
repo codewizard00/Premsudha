@@ -20,7 +20,7 @@ const db = {};
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
-db.sequelize.sync({ force: true, match: /Premsudha$/ })
+db.sequelize.sync({ alter: true, match: /Premsudha$/ })
     .then(() => {
         console.log("yes re-sync");
     })
