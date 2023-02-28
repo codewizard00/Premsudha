@@ -1,22 +1,42 @@
-import axios from "axios";
+import axios from 'axios';
 
-const setupAxiosInterceptors = (tokens, dispatch) => {
-    const request = axios.create({
-      baseURL: process.env.REACT_APP_PROD_URL
-    });
-    request.interceptors.response.use(null, err => {
-      const {
-        config,
-        response: { status }
-      } = err;
-      const originalRequest = config;
-      if (status === 401) {
-        
+const instance = axios.create({
+  baseURL: "http://localhost:8080/api",
+  headers: {
+    "Content-Type": "application/json",
+  },
+});
+
+
+
+instance.interceptors.response.use(
+  (res) => {
+    return res;
+  },
+  async (err) => {
+    const originalConfig = err.config;
+
+    if (err.response) {
+      // Access Token was expired
+      if (err.response.status === 401) {
+        originalConfig._retry = true;
+        try {
+          return instance(originalConfig);
+        } catch (_error) {
+          if (_error.response && _error.response.data) {
+            return Promise.reject(_error.response.data);
+          }
+          return Promise.reject(_error);
+        }
       }
-      return Promise.reject(err);
-    });
-  
-    return request;
-  };
-  
-  export default setupAxiosInterceptors;
+
+      if (err.response.status === 403 && err.response.data) {
+        return Promise.reject(err.response.data);
+      }
+    }
+
+    return Promise.reject(err);
+  }
+);
+
+export default instance;
