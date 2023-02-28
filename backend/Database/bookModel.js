@@ -10,7 +10,7 @@ module.exports=((sequelize,DataTypes)=>{
         image:DataTypes.STRING,
         image_alt:DataTypes.STRING,
         writer:DataTypes.STRING,
-        about:DataTypes.STRING,
+        about:DataTypes.TEXT('long'),
         url:DataTypes.STRING,
     })
     return Books;

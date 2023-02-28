@@ -9,7 +9,7 @@ module.exports=((sequelize,DataTypes)=>{
         fullName:DataTypes.STRING,
         place:DataTypes.STRING,
         position:DataTypes.STRING,
-        about:DataTypes.STRING,
+        about:DataTypes.TEXT('long'),
         image_url:DataTypes.STRING,
         image_alt:DataTypes.STRING,
     })

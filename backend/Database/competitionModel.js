@@ -10,7 +10,7 @@ module.exports = ((sequelize, DataTypes) => {
         place: DataTypes.STRING,
         timings: DataTypes.STRING,
         content: DataTypes.TEXT('long'),
-        about:DataTypes.STRING,
+        about:DataTypes.TEXT('long'),
         image_url: DataTypes.STRING,
         image_alt: DataTypes.STRING,
         keyword: DataTypes.STRING,
