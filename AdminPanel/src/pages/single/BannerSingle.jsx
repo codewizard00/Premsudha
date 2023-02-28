@@ -61,7 +61,7 @@ const BannerSingle = () => {
 
         var config = {
             method: 'post',
-            url: `${process.env.REACT_APP_PROD_URL}update/banner/${bannerIdC}`,
+            url: `${process.env.REACT_APP_PROD_URL}update/banner/${bannerId}`,
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${localStorage.getItem("adminInfo").replace(/['"]/g, '')}`
