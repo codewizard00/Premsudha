@@ -7,7 +7,7 @@ const router = express.Router();
 
 router.get('/get/AllBook',getAllBooks);
 
-router.get('/get/books/:id',authenticateJWT('ADMIN'),getBooks)
+router.get('/get/books/:id',getBooks)
 
 router.post('/create/books', authenticateJWT('ADMIN'), createBook);
 

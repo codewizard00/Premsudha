@@ -14,6 +14,8 @@ const CompetiionNew = () => {
     const [place, setPlace] = useState("");
     const [content, setContent] = useState("");
     const [alt, setAlt] = useState("");
+    const [about,setAbout] = useState("");
+    const [keyword,setKeyowrd] = useState("");
     const [loader, setLoader] = useState(false)
 
     const log = () => {
@@ -42,6 +44,8 @@ const CompetiionNew = () => {
                 place,
                 image_alt: alt,
                 image_base64: base1,
+                about,
+                keyword
             });
 
             var config = {
@@ -64,6 +68,8 @@ const CompetiionNew = () => {
                     setTimings("");
                     setPlace("");
                     setAlt("");
+                    setKeyowrd("")
+                    setAbout("");
                 })
                 .catch(function (error) {
                     setLoader(false);
@@ -137,6 +143,12 @@ const CompetiionNew = () => {
                                 </Grid>
                                 <Grid item xs={6}>
                                     <TextField fullWidth variant="outlined" label="Image Alt" value={alt} onChange={(e) => { setAlt(e.target.value) }} />
+                                </Grid>
+                                <Grid item xs={6}>
+                                    <TextField fullWidth variant="outlined" label="About" value={about} onChange={(e) => { setAbout(e.target.value) }} />
+                                </Grid>
+                                <Grid item xs={6}>
+                                    <TextField fullWidth variant="outlined" label="Keywords(Seperated By Comma)" value={keyword} onChange={(e) => { setKeyowrd(e.target.value) }} />
                                 </Grid>
                                 <Grid item xs={12}>
                                     <Editor

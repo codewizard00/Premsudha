@@ -6,7 +6,7 @@ const router = express.Router();
 
 router.get('/get/AllCompetion', getAllCompetition)
 
-router.get('/get/competition/:id',authenticateJWT('ADMIN'),getCompetition)
+router.get('/get/competition/:id',getCompetition)
 
 router.post('/create/competition', authenticateJWT('ADMIN'), createCompetitions);
 

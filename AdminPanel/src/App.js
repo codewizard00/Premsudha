@@ -1,6 +1,5 @@
 import Home from "./pages/home/Home";
 import Login from "./pages/login/Login";
-import New from "./pages/new/TeamNew";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./style/dark.scss";
 import { useContext } from "react";
@@ -18,6 +17,9 @@ import BookList from "./pages/list/BookList";
 import BookNew from "./pages/new/Book";
 import BookSingle from "./pages/single/BookSingle";
 import EmailNew from "./pages/new/Email";
+import Banner from "./pages/list/BannerList";
+import BannerNew from "./pages/new/Banner";
+import BannerSingle from "./pages/single/BannerSingle";
 
 function App() {
 
@@ -57,6 +59,14 @@ function App() {
               <Route
                 path="new"
                 element={<BookNew />}
+              />
+            </Route>
+            <Route path="banner">
+              <Route index element={<Banner />} />
+              <Route path="single/:bannerId" element={<BannerSingle />} />
+              <Route
+                path="new"
+                element={<BannerNew />}
               />
             </Route>
             <Route path="email">

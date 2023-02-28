@@ -23,7 +23,9 @@ const CompetitionSingle = () => {
   const [timings, setTimings] = useState("");
   const [content, setContent] = useState("");
   const [place, setPlace] = useState("");
-  const [alt, setAlt] = useState("")
+  const [alt, setAlt] = useState("");
+  const [about, setAbout] = useState("");
+  const [keyword, setKeyowrd] = useState("");
 
 
   const editorRef = useRef(null);
@@ -46,6 +48,8 @@ const CompetitionSingle = () => {
         setContent(response?.data?.message?.content);
         setAlt(response?.data?.message?.image_alt);
         setImageUrl(response?.data?.message?.image_url);
+        setAbout(response?.data?.message?.about);
+        setKeyowrd(response?.data?.message?.keyword);
       })
       .catch(function (error) {
         console.log(error);
@@ -72,6 +76,8 @@ const CompetitionSingle = () => {
       content,
       image_alt: alt,
       image_base64: base64,
+      about,
+      keyword
     });
 
     var config = {
@@ -162,6 +168,15 @@ const CompetitionSingle = () => {
                   <Grid item xs={6}>
                     <TextField fullWidth disabled variant="outlined" label="Image Alt" value={alt} onChange={(e) => { setAlt(e.target.value) }} />
                   </Grid>
+                  <Grid item xs={6}>
+                    <TextField fullWidth disabled variant="outlined" label="About" value={about} onChange={(e) => { setAbout(e.target.value) }} />
+                  </Grid>
+                  <Grid item xs={6}>
+                    <TextField fullWidth disabled variant="outlined" label="About" value={about} onChange={(e) => { setAbout(e.target.value) }} />
+                  </Grid>
+                  <Grid item xs={6}>
+                    <TextField fullWidth disabled variant="outlined" label="Keywords(Seperated By Comma)" value={keyword} onChange={(e) => { setKeyowrd(e.target.value) }} />
+                  </Grid>
                   <Grid item xs={12}>
                     <Editor
                       apiKey='p2qose3sr3783k8d9elgdbdni9cty8bvlj6aa1ct899o5722'
@@ -231,6 +246,12 @@ const CompetitionSingle = () => {
                   </Grid>
                   <Grid item xs={6}>
                     <TextField disabled fullWidth variant="outlined" label="Image Alt" value={alt} onChange={(e) => { setAlt(e.target.value) }} />
+                  </Grid>
+                  <Grid item xs={6}>
+                    <TextField fullWidth variant="outlined" label="About" value={about} onChange={(e) => { setAbout(e.target.value) }} />
+                  </Grid>
+                  <Grid item xs={6}>
+                    <TextField fullWidth variant="outlined" label="Keywords(Seperated By Comma)" value={keyword} onChange={(e) => { setKeyowrd(e.target.value) }} />
                   </Grid>
                   <Grid item xs={12}>
                     {parse(content)}

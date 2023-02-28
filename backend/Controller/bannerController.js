@@ -32,8 +32,12 @@ exports.deleteBanner = catchAsyncError(async (req, res) => {
 })
 
 exports.createBanner = catchAsyncError(async (req, res) => {
+    
     const { image_base_64, image_alt, banner_type } = req.body;
-    const { url } = await Cloudinary(image_base_64, image_alt);
-    const data = await Banner.create({ image_url: url, image_alt, banner_type });
+
+    const image = await Cloudinary(image_base_64, image_alt);
+   
+    const data = await Banner.create({ image_url: image.url, image_alt, banner_type });
+   
     return res.status(200).json({ message: "Succesfully Created" });
 })

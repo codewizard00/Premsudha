@@ -41,8 +41,7 @@ exports.userLogin = catchAsyncError(async (req, res, next) => {
                     expiresIn: "12h",
                 }
             );
-
-            res.status(200).json({ message: token })
+            res.status(200).json({ message: { token, data: user_exists.username } })
         }
     } else {
         res.status(400).json({ message: "Invalid Credentials" })
@@ -64,7 +63,7 @@ exports.adminLogin = catchAsyncError(async (req, res, next) => {
                     expiresIn: "12h",
                 }
             );
-            res.status(200).json({ message: token })
+            res.status(200).json({ message: token})
         }
     } else {
         res.status(400).json({ message: "Invalid Credentials" })
@@ -108,8 +107,9 @@ exports.emailVerify = catchAsyncError(async (req, res, next) => {
                 }
             );
             res.status(200).json({ message: token })
+        } else {
+            res.status(400).json({ message: "Invalid Otp" })
         }
-        return new ErrorHandling("Invalid OTP.", 401)
     }
 })
 

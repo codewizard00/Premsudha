@@ -235,8 +235,8 @@ exports.verifyEmail = async (name, email, token) => {
                 <tr>
                   <td class="content-cell">
                     <p class="sub center">
-                      Canvas Labs, Inc.
-                      <br>325 9th St, San Francisco, CA 94103
+                      Premsudha.com
+                      <br>Address Here
                     </p>
                   </td>
                 </tr>
