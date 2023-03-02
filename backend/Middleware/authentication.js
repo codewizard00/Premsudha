@@ -8,10 +8,10 @@ exports.authenticateJWT =(...roles)=> (req, res, next) => {
         jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
             if (err) {
                 console.log(err)
-                return res.status(401).json({message:`Unauthorized's Access`})
+                return res.status(403).json({message:`Unauthorized's Access`})
             }
             if(!roles.includes(user.user_type)){
-                return res.status(401).json({message:`User with ${user.user_type} is not allowd to allocate this resource`})
+                return res.status(403).json({message:`User with ${user.user_type} is not allowd to allocate this resource`})
             }
             req.user = user;
             next();

@@ -7,6 +7,7 @@ import axios from "axios";
 import { Box, Button, Modal, Typography } from "@mui/material";
 import { red } from '@mui/material/colors';
 import toaster from "../../Helper/toaster";
+import axiosInstance from "../../interceptor"
 
 const style = {
   position: 'absolute',
@@ -33,47 +34,31 @@ const TeamDatatable = () => {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  const [data, setData] = useState("");
+  const [data, setData] = useState([]);
   const getData = () => {
-    var config = {
-      method: 'get',
-      url: `${process.env.REACT_APP_PROD_URL}get/Allteams`,
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem("adminInfo").replace(/['"]/g, '')}`
-      },
-    };
-
-    axios(config)
-      .then(function (response) {
-        setData(response.data.message)
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+    axiosInstance()
+    .get(`${process.env.REACT_APP_PROD_URL}get/Allteams`,{})
+    .then((res) => {
+      setData(res?.data?.message);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
   }
   useEffect(() => {
     getData();
   }, [])
   const handleDelete = async (id) => {
-    var config = {
-      method: 'delete',
-      url: `${process.env.REACT_APP_PROD_URL}delete/team/${id}`,
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem("adminInfo").replace(/['"]/g, '')}`
-      },
-    };
-
-    axios(config)
-      .then(function (response) {
-        console.log(JSON.stringify(response.data));
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-    toaster('sucess',"Succesfully Deleted")
-    handleClose();
+    axiosInstance()
+    .delete(`${process.env.REACT_APP_PROD_URL}delete/team/${id}`,{})
+    .then((res) => {
+      console.log(JSON.stringify(res.data));
+      toaster('sucess',"Succesfully Deleted")
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+     handleClose();
     getData();
   };
 

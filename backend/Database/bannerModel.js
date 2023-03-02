@@ -6,9 +6,9 @@ module.exports = ((sequelize, DataTypes) => {
             autoIncrement: true,
             primaryKey: true
         },
-        image_url: DataTypes.STRING,
-        image_alt: DataTypes.STRING,
-        banner_type: DataTypes.STRING,
+        image_url: DataTypes.TEXT('long'),
+        image_alt: DataTypes.TEXT('long'),
+        banner_type: DataTypes.TEXT('long'),
     })
     return Books;
 })

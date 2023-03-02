@@ -6,12 +6,12 @@ module.exports=((sequelize,DataTypes)=>{
             autoIncrement: true,
             primaryKey: true
         },
-        fullName:DataTypes.STRING,
-        place:DataTypes.STRING,
-        position:DataTypes.STRING,
+        fullName:DataTypes.TEXT('long'),
+        place:DataTypes.TEXT('long'),
+        position:DataTypes.TEXT('long'),
         about:DataTypes.TEXT('long'),
-        image_url:DataTypes.STRING,
-        image_alt:DataTypes.STRING,
+        image_url:DataTypes.TEXT('long'),
+        image_alt:DataTypes.TEXT('long'),
     })
     return Teams;
 })

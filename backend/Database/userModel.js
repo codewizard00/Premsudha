@@ -6,13 +6,13 @@ module.exports=((sequelize,DataTypes)=>{
             autoIncrement: true,
             primaryKey: true
         },
-        username:DataTypes.STRING,
-        email:DataTypes.STRING,
-        gender:DataTypes.STRING,
-        password:DataTypes.STRING,
-        user_type:DataTypes.STRING,
-        phone:DataTypes.STRING,
-        email_token:DataTypes.STRING,
+        username:DataTypes.TEXT('long'),
+        email:DataTypes.TEXT('long'),
+        gender:DataTypes.TEXT('long'),
+        password:DataTypes.TEXT('long'),
+        user_type:DataTypes.TEXT('long'),
+        phone:DataTypes.TEXT('long'),
+        email_token:DataTypes.TEXT('long'),
         email_verified:DataTypes.INTEGER
     })
     return Users;

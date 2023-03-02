@@ -46,7 +46,7 @@ exports.updatateCompetitions = catchAsyncError(async (req, res) => {
 })
 
 exports.createCompetitions = catchAsyncError(async (req, res) => {
-    const { title, place, timings, content, image_alt, image_base64,about } = req.body
+    const { title, place, timings, content, image_alt, image_base64,about,keyword } = req.body
     const { url } = await Cloudinary(image_base64, image_alt);
     const data = await Competions.create({ title, place, timings,keyword ,content, image_url: url, image_alt,about });
     return res.status(200).json({ message: "Succesfully Created" });

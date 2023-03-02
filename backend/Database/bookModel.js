@@ -6,12 +6,12 @@ module.exports=((sequelize,DataTypes)=>{
             autoIncrement: true,
             primaryKey: true
         },
-        title:DataTypes.STRING,
-        image:DataTypes.STRING,
-        image_alt:DataTypes.STRING,
-        writer:DataTypes.STRING,
+        title:DataTypes.TEXT('long'),
+        image:DataTypes.TEXT('long'),
+        image_alt:DataTypes.TEXT('long'),
+        writer:DataTypes.TEXT('long'),
         about:DataTypes.TEXT('long'),
-        url:DataTypes.STRING,
+        url:DataTypes.TEXT('long'),
     })
     return Books;
 })

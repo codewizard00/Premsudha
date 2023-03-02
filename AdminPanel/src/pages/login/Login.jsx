@@ -15,7 +15,6 @@ const Login = () => {
         }
       }
       const data = await axios.post(`${process.env.REACT_APP_PROD_URL}admin/login`, { email, password }, config)
-      console.log(data.status===200)
       if (data.status===200) {
         toaster("sucess", "Successfully Logged In");
         localStorage.setItem("adminInfo", JSON.stringify(data.data.message))

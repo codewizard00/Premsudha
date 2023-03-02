@@ -14,8 +14,8 @@ const CompetiionNew = () => {
     const [place, setPlace] = useState("");
     const [content, setContent] = useState("");
     const [alt, setAlt] = useState("");
-    const [about,setAbout] = useState("");
-    const [keyword,setKeyowrd] = useState("");
+    const [about, setAbout] = useState("");
+    const [keyword, setKeyowrd] = useState("");
     const [loader, setLoader] = useState(false)
 
     const log = () => {
@@ -139,8 +139,20 @@ const CompetiionNew = () => {
                                     <TextField fullWidth variant="outlined" label="Place" type="text" value={place} onChange={(e) => { setPlace(e.target.value) }} />
                                 </Grid>
                                 <Grid item xs={6}>
-                                    <TextField fullWidth variant="outlined" label="Timings" type="text" value={timings} onChange={(e) => { setTimings(e.target.value) }} />
+                                    <TextField
+                                        id="datetime-local"
+                                        label="Timings"
+                                        type="datetime-local"
+                                        defaultValue="2017-05-24T10:30"
+                                        fullWidth
+                                        value={timings}
+                                        onChange={(e) => { setTimings(e.target.value) }}
+                                        InputLabelProps={{
+                                            shrink: true,
+                                        }}
+                                    />
                                 </Grid>
+
                                 <Grid item xs={6}>
                                     <TextField fullWidth variant="outlined" label="Image Alt" value={alt} onChange={(e) => { setAlt(e.target.value) }} />
                                 </Grid>

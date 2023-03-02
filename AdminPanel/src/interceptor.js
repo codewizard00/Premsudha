@@ -1,42 +1,46 @@
-import axios from 'axios';
+import axios from "axios";
 
-const instance = axios.create({
-  baseURL: "http://localhost:8080/api",
-  headers: {
-    "Content-Type": "application/json",
-  },
-});
+export default (history = null) => {
+  const baseURL = process.env.REACT_APP_BACKEND_URL;
 
 
+  let headers = {};
 
-instance.interceptors.response.use(
-  (res) => {
-    return res;
-  },
-  async (err) => {
-    const originalConfig = err.config;
+  if (localStorage.getItem("adminInfo")) {
+    headers.Authorization = `Bearer ${localStorage.getItem("adminInfo").replace(/['"]/g, '')}`;
+  }
 
-    if (err.response) {
-      // Access Token was expired
-      if (err.response.status === 401) {
-        originalConfig._retry = true;
-        try {
-          return instance(originalConfig);
-        } catch (_error) {
-          if (_error.response && _error.response.data) {
-            return Promise.reject(_error.response.data);
-          }
-          return Promise.reject(_error);
-        }
+  const axiosInstance = axios.create({
+    baseURL: baseURL,
+    headers,
+  });
+
+  axiosInstance.interceptors.response.use(
+    (response) =>
+      new Promise((resolve, reject) => {
+        resolve(response);
+      }),
+    (error) => {
+      if (!error.response) {
+        return new Promise((resolve, reject) => {
+          reject(error);
+        });
       }
+      if (error.response.status === 403) {
+        localStorage.removeItem("adminInfo");
 
-      if (err.response.status === 403 && err.response.data) {
-        return Promise.reject(err.response.data);
+        if (history) {
+          history.push("/login");
+        } else {
+          window.location = "/login";
+        }
+      } else {
+        return new Promise((resolve, reject) => {
+          reject(error);
+        });
       }
     }
+  );
 
-    return Promise.reject(err);
-  }
-);
-
-export default instance;
+  return axiosInstance;
+};

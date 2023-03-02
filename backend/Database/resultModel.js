@@ -6,13 +6,13 @@ module.exports=((sequelize,DataTypes)=>{
             autoIncrement: true,
             primaryKey: true
         },
-        writer:DataTypes.STRING,
-        writer_img:DataTypes.STRING,
-        writer_alt:DataTypes.STRING,
-        position:DataTypes.STRING,
-        place:DataTypes.STRING,
-        certificate:DataTypes.STRING,
-        competition_id:DataTypes.STRING,
+        writer:DataTypes.TEXT('long'),
+        writer_img:DataTypes.TEXT('long'),
+        writer_alt:DataTypes.TEXT('long'),
+        position:DataTypes.TEXT('long'),
+        place:DataTypes.TEXT('long'),
+        certificate:DataTypes.TEXT('long'),
+        competition_id:DataTypes.TEXT('long'),
     })
     return Results;
 })

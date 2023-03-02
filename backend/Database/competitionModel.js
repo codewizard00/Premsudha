@@ -6,14 +6,14 @@ module.exports = ((sequelize, DataTypes) => {
             autoIncrement: true,
             primaryKey: true
         },
-        title: DataTypes.STRING,
-        place: DataTypes.STRING,
-        timings: DataTypes.STRING,
+        title: DataTypes.TEXT('long'),
+        place: DataTypes.TEXT('long'),
+        timings: DataTypes.TEXT('long'),
         content: DataTypes.TEXT('long'),
         about:DataTypes.TEXT('long'),
-        image_url: DataTypes.STRING,
-        image_alt: DataTypes.STRING,
-        keyword: DataTypes.STRING,
+        image_url: DataTypes.TEXT('long'),
+        image_alt: DataTypes.TEXT('long'),
+        keyword: DataTypes.TEXT('long'),
     })
     return Competitions;
 })
