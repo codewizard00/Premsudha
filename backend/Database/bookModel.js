@@ -12,6 +12,7 @@ module.exports=((sequelize,DataTypes)=>{
         writer:DataTypes.TEXT('long'),
         about:DataTypes.TEXT('long'),
         url:DataTypes.TEXT('long'),
+        book_type:DataTypes.TEXT('long'),
     })
     return Books;
 })

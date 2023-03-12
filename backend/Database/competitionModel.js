@@ -14,6 +14,7 @@ module.exports = ((sequelize, DataTypes) => {
         image_url: DataTypes.TEXT('long'),
         image_alt: DataTypes.TEXT('long'),
         keyword: DataTypes.TEXT('long'),
+        type: DataTypes.TEXT('long'),
     })
     return Competitions;
 })

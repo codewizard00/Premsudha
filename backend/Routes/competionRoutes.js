@@ -1,10 +1,11 @@
 const express = require("express");
-const { createCompetitions, getAllCompetition, getCompetition, updatateCompetitions, deleteCompetition } = require("../Controller/competitionController");
+const { createCompetitions, getAllCompetition, getCompetition, updatateCompetitions, deleteCompetition, getAllCompetitionType } = require("../Controller/competitionController");
 const { authenticateJWT } = require("../Middleware/authentication");
 
 const router = express.Router();
 
 router.get('/get/AllCompetion', getAllCompetition)
+router.get('/get/AllCompetion/:type', getAllCompetitionType)
 
 router.get('/get/competition/:id',getCompetition)
 

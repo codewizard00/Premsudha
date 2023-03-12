@@ -4,13 +4,14 @@ import Navbar from "../../components/navbar/Navbar";
 import DriveFolderUploadOutlinedIcon from "@mui/icons-material/DriveFolderUploadOutlined";
 import { useState } from "react";
 import axios from "axios";
-import { Backdrop, CircularProgress, Grid, TextField } from "@mui/material";
+import { Autocomplete, Backdrop, CircularProgress, Grid, TextField } from "@mui/material";
 import toaster from "../../Helper/toaster";
 const BookNew = () => {
   const [file1, setFile1] = useState("");
   const [file2, setFile2] = useState("");
   const [title, setTitle] = useState("");
   const [writer, setWriter] = useState("");
+  const [type, setType] = useState("");
   const [about, setAbout] = useState("");
   const [alt, setAlt] = useState("");
   const [loader, setLoader] = useState(false)
@@ -33,7 +34,8 @@ const BookNew = () => {
         writer,
         image_alt: alt,
         book_image_64: base1,
-        book_pdf_base64:base2,
+        book_pdf_base64: base2,
+        book_type: type,
       });
 
       var config = {
@@ -56,6 +58,7 @@ const BookNew = () => {
           setAbout("");
           setWriter("");
           setAlt("");
+          setType("");
         })
         .catch(function (error) {
           setLoader(false);
@@ -141,11 +144,20 @@ const BookNew = () => {
                 <Grid item xs={6}>
                   <TextField fullWidth variant="outlined" label="Image Alt" value={alt} onChange={(e) => { setAlt(e.target.value) }} />
                 </Grid>
+                <Grid item xs={6}>
+                  <Autocomplete
+                    disablePortal
+                    id="combo-box-demo"
+                    options={["Book", "eBook"]}
+                    onChange={(event, value) => setType(value)} 
+                    renderInput={(params) => <TextField fullWidth  {...params} label="Movie" />}
+                  />
+                </Grid>
                 <Grid item xs={12}>
                   <TextField multiline rows={4} fullWidth variant="outlined" label="About" value={about} onChange={(e) => { setAbout(e.target.value) }} />
                 </Grid>
                 <Grid item xs={12}>
-                  <button type="button" onClick={() => { submit() }}>Send</button>
+                  <button type="button" className="buttons" onClick={() => { submit() }}>Send</button>
                 </Grid>
               </Grid>
             </form>

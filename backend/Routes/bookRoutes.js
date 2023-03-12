@@ -1,9 +1,11 @@
 const express = require("express");
-const { getAllBooks, createBook, deleteBook, getBooks } = require("../Controller/bookController");
+const { getAllBooks, createBook, deleteBook, getBooks, getAllBooksType } = require("../Controller/bookController");
 const { getCompetition } = require("../Controller/competitionController");
 const { authenticateJWT } = require("../Middleware/authentication");
 
 const router = express.Router();
+
+router.get('/get/AllBook/:book_type',getAllBooksType);
 
 router.get('/get/AllBook',getAllBooks);
 

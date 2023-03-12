@@ -10,6 +10,12 @@ exports.getAllBanner = catchAsyncError(async (req, res) => {
     res.status(200).json({ message: data });
 })
 
+exports.getAllBannerType = catchAsyncError(async (req, res) => {
+    const {banner_type} = req.params;
+    const data = await Banner.findAll({where:{banner_type}});
+    res.status(200).json({ message: data });
+})
+
 exports.getBanner = catchAsyncError(async (req, res) => {
     const { id } = req.params;
     const data = await Banner.findOne({ where: { id } });

@@ -7,7 +7,14 @@ const { Cloudinary } = require("../Utils/Cloudinary");
 const ErrorHandling = require("../Utils/ErrorHandling");
 
 exports.getAllCompetition = catchAsyncError(async (req, res) => {
-    const data = await Competions.findAll();
+    const { type } = req.params;
+    const data = await Competions.findAll({where:{type}});
+    res.status(200).json({ message: data });
+})
+
+exports.getAllCompetitionType = catchAsyncError(async (req, res) => {
+    const { type } = req.params;
+    const data = await Competions.findAll({where:{type}});
     res.status(200).json({ message: data });
 })
 
@@ -46,8 +53,8 @@ exports.updatateCompetitions = catchAsyncError(async (req, res) => {
 })
 
 exports.createCompetitions = catchAsyncError(async (req, res) => {
-    const { title, place, timings, content, image_alt, image_base64,about,keyword } = req.body
+    const { title, place, timings, content, image_alt, image_base64,about,keyword,type } = req.body
     const { url } = await Cloudinary(image_base64, image_alt);
-    const data = await Competions.create({ title, place, timings,keyword ,content, image_url: url, image_alt,about });
+    const data = await Competions.create({ title, place, timings,keyword ,content, image_url: url, image_alt,about,type });
     return res.status(200).json({ message: "Succesfully Created" });
 })
