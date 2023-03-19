@@ -112,7 +112,7 @@ const BannerNew = () => {
                                     <Autocomplete
                                         disablePortal
                                         id="combo-box-demo"
-                                        options={["Home-Carousel", "Gallery-Carousel"]}
+                                        options={["Home-Carousel","Gallery-Carousel","Event-Gallery"]}
                                         onChange={(event, value) => setBannerType(value)}
                                         renderInput={(params) => <TextField fullWidth  {...params} label="Type" />}
                                     />
