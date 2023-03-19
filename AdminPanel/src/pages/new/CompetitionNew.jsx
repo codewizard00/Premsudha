@@ -4,7 +4,7 @@ import Navbar from "../../components/navbar/Navbar";
 import DriveFolderUploadOutlinedIcon from "@mui/icons-material/DriveFolderUploadOutlined";
 import { useRef, useState } from "react";
 import axios from "axios";
-import { Backdrop, CircularProgress, Grid, TextField } from "@mui/material";
+import { Autocomplete, Backdrop, CircularProgress, Grid, TextField } from "@mui/material";
 import toaster from "../../Helper/toaster";
 import { Editor } from '@tinymce/tinymce-react';
 const CompetiionNew = () => {
@@ -14,6 +14,7 @@ const CompetiionNew = () => {
     const [place, setPlace] = useState("");
     const [content, setContent] = useState("");
     const [alt, setAlt] = useState("");
+    const [type,setType] = useState('');
     const [about, setAbout] = useState("");
     const [keyword, setKeyowrd] = useState("");
     const [loader, setLoader] = useState(false)
@@ -45,7 +46,8 @@ const CompetiionNew = () => {
                 image_alt: alt,
                 image_base64: base1,
                 about,
-                keyword
+                keyword,
+                type
             });
 
             var config = {
@@ -70,6 +72,7 @@ const CompetiionNew = () => {
                     setAlt("");
                     setKeyowrd("")
                     setAbout("");
+                    setType("");
                 })
                 .catch(function (error) {
                     setLoader(false);
@@ -161,6 +164,15 @@ const CompetiionNew = () => {
                                 </Grid>
                                 <Grid item xs={6}>
                                     <TextField fullWidth variant="outlined" label="Keywords(Seperated By Comma)" value={keyword} onChange={(e) => { setKeyowrd(e.target.value) }} />
+                                </Grid>
+                                <Grid item xs={6}>
+                                    <Autocomplete
+                                        disablePortal
+                                        id="combo-box-demo"
+                                        options={["Upcoming-Competitions", "Blog"]}
+                                        onChange={(event, value) => setType(value)}
+                                        renderInput={(params) => <TextField fullWidth  {...params} label="Type" />}
+                                    />
                                 </Grid>
                                 <Grid item xs={12}>
                                     <Editor

@@ -4,7 +4,7 @@ import Navbar from "../../components/navbar/Navbar";
 import DriveFolderUploadOutlinedIcon from "@mui/icons-material/DriveFolderUploadOutlined";
 import { useState } from "react";
 import axios from "axios";
-import { Backdrop, CircularProgress, Grid, TextField } from "@mui/material";
+import { Autocomplete, Backdrop, CircularProgress, Grid, TextField } from "@mui/material";
 import toaster from "../../Helper/toaster";
 const BannerNew = () => {
     const [file1, setFile1] = useState("");
@@ -23,7 +23,7 @@ const BannerNew = () => {
             setLoader(true)
             const base1 = await getBase64(file1);
             var data = JSON.stringify({
-                banner_type:bannerType,
+                banner_type: bannerType,
                 image_alt: alt,
                 image_base_64: base1,
             });
@@ -109,7 +109,13 @@ const BannerNew = () => {
                                     </div>
                                 </Grid>
                                 <Grid item xs={6}>
-                                    <TextField fullWidth variant="outlined" label="Banner Type" type="text" value={bannerType} onChange={(e) => { setBannerType(e.target.value) }} />
+                                    <Autocomplete
+                                        disablePortal
+                                        id="combo-box-demo"
+                                        options={["Home-Carousel", "Gallery-Carousel"]}
+                                        onChange={(event, value) => setBannerType(value)}
+                                        renderInput={(params) => <TextField fullWidth  {...params} label="Type" />}
+                                    />
                                 </Grid>
                                 <Grid item xs={6}>
                                     <TextField fullWidth variant="outlined" label="Image Alt" value={alt} onChange={(e) => { setAlt(e.target.value) }} />

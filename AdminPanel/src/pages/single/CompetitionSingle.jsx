@@ -3,7 +3,7 @@ import Sidebar from "../../components/sidebar/Sidebar";
 import Navbar from "../../components/navbar/Navbar";
 import { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Backdrop, Button, CircularProgress, Grid, TextField } from "@mui/material";
+import { Autocomplete, Backdrop, Button, CircularProgress, Grid, TextField } from "@mui/material";
 import axios from "axios";
 import DriveFolderUploadOutlined from "@mui/icons-material/DriveFolderUploadOutlined";
 import { Box } from "@mui/system";
@@ -26,7 +26,7 @@ const CompetitionSingle = () => {
   const [alt, setAlt] = useState("");
   const [about, setAbout] = useState("");
   const [keyword, setKeyowrd] = useState("");
-
+  const [type,setType] = useState("");
 
   const editorRef = useRef(null);
 
@@ -50,6 +50,7 @@ const CompetitionSingle = () => {
         setImageUrl(response?.data?.message?.image_url);
         setAbout(response?.data?.message?.about);
         setKeyowrd(response?.data?.message?.keyword);
+        setType(response?.data?.message?.type);
       })
       .catch(function (error) {
         console.log(error);
@@ -77,7 +78,8 @@ const CompetitionSingle = () => {
       image_alt: alt,
       image_base64: base64,
       about,
-      keyword
+      keyword,
+      type
     });
 
     var config = {
@@ -176,6 +178,15 @@ const CompetitionSingle = () => {
                   </Grid>
                   <Grid item xs={6}>
                     <TextField fullWidth disabled variant="outlined" label="Keywords(Seperated By Comma)" value={keyword} onChange={(e) => { setKeyowrd(e.target.value) }} />
+                  </Grid>
+                  <Grid item xs={6}>
+                    <Autocomplete
+                      disablePortal
+                      id="combo-box-demo"
+                      onChange={(event, value) => setType(value)}
+                      options={['Upcoming-Competitions','Competitions','Blog']}
+                      renderInput={(params) => <TextField {...params} fullWidth label="Type" />}
+                    />
                   </Grid>
                   <Grid item xs={12}>
                     <Editor

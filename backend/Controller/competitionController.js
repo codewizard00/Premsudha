@@ -7,8 +7,7 @@ const { Cloudinary } = require("../Utils/Cloudinary");
 const ErrorHandling = require("../Utils/ErrorHandling");
 
 exports.getAllCompetition = catchAsyncError(async (req, res) => {
-    const { type } = req.params;
-    const data = await Competions.findAll({where:{type}});
+    const data = await Competions.findAll();
     res.status(200).json({ message: data });
 })
 
@@ -41,13 +40,13 @@ exports.deleteCompetition = catchAsyncError(async (req, res) => {
 
 exports.updatateCompetitions = catchAsyncError(async (req, res) => {
     const { id } = req.params;
-    const { title, place, timings, about,keyword ,image_base64, image_alt } = req.body;
+    const { title, place, timings, about,keyword ,image_base64, image_alt,type } = req.body;
     const data = await Competions.findOne({ where: { id } });
     if (!data) {
         return new ErrorHandling("Data Not Found", 404);
     } else {
         const { url } = await Cloudinary(image_base64, image_alt);
-        const data = await Competions.update({ title,keyword, place, timings, about, image_url: url, image_alt }, { where: { id } })
+        const data = await Competions.update({ title,keyword, place, timings, about, image_url: url, image_alt,type }, { where: { id } })
         return res.status(200).json({ message: "Succesfully Updated" });
     }
 })

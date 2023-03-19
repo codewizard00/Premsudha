@@ -150,7 +150,7 @@ const BookNew = () => {
                     id="combo-box-demo"
                     options={["Book", "eBook"]}
                     onChange={(event, value) => setType(value)} 
-                    renderInput={(params) => <TextField fullWidth  {...params} label="Movie" />}
+                    renderInput={(params) => <TextField fullWidth  {...params} label="Book Type" />}
                   />
                 </Grid>
                 <Grid item xs={12}>

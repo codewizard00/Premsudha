@@ -29,6 +29,7 @@ exports.getBanner = catchAsyncError(async (req, res) => {
 exports.deleteBanner = catchAsyncError(async (req, res) => {
     const { id } = req.params;
     const data = await Banner.findOne({ where: { id } });
+    console.log(data,id)
     if (!data) {
         return new ErrorHandling("Data Not Found", 404);
     } else {
