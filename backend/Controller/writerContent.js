@@ -1,60 +1,44 @@
 const db = require("../Database")
-const Writer = db.writer;
+const WriterContent = db.writerContent;
 const catchAsyncError = require("../Middleware/catchAsyncError");
 const { Cloudinary } = require("../Utils/Cloudinary");
 const ErrorHandling = require("../Utils/ErrorHandling");
 
-exports.getAllWriter = catchAsyncError(async (req, res) => {
-    const data = await Writer.findAll();
-    const { id } = req.params;
+exports.getAllWriterContent = catchAsyncError(async (req, res) => {
+    const data = await WriterContent.findAll();
     res.status(200).json({ message: data });
 })
 
-exports.getWriter = catchAsyncError(async (req, res) => {
-    const { id } = req.params;
-    const data = await Writer.findOne({ where: { id } });
-    if (!data) {
-        return new ErrorHandling("Data Not Found", 404);
-    } else {
-        res.status(200).json({ message: data });
-    }
-})
 
-exports.deleteWriter = catchAsyncError(async (req, res) => {
+
+exports.deleteWriterContent = catchAsyncError(async (req, res) => {
     const { id } = req.params;
-    const data = await Writer.findOne({ where: { id } });
+    const { writer_id } = req.params;
+    const data = await WriterContent.findOne({ where: { id,writer_id } });
     if (!data) {
         return new ErrorHandling("Data Not Found", 404);
     } else {
-        const data = Writer.destroy({ where: { id } });
+        const data = WriterContent.destroy({ where: { id } });
         return res.status(200).json({ message: "Succesfully Deleted" });
     }
 })
 
 exports.updateWriter = catchAsyncError(async (req, res) => {
     const { id } = req.params;
-    const { name, gender, place, image_base64, image_alt } = req.body;
-    const data = await Writer.findOne({ where: { id } });
-
-    let url;
+    const { writer_id } = req.params;
+    const { content,type } = req.body;
+    const data = await WriterContent.findOne({ where: { id ,writer_id} });
     if (!data) {
         return new ErrorHandling("Data Not Found", 404);
     } else {
-        if (image_base64.length < 50) {
-            url = image_base64;
-        }
-        else {
-            const data1 = await Cloudinary(image_base64, image_alt);
-            url = data1.url;
-        }
-        const data = await Writer.update({ name, place, gender, image_url: url, image_alt }, { where: { id } })
+        const data1 = await WriterContent.update({ content,type  }, { where: { id } })
         return res.status(200).json({ message: "Succesfully Updated" });
     }
 })
 
 exports.cerateWriter = catchAsyncError(async (req, res) => {
-    const { name, place, gender, image_alt, image_base64 } = req.body;
-    const response = await Cloudinary(image_base64, image_alt);
-    const data = await Writer.create({ name, place, gender, image: response.url, image_alt });
+    const { writer_id } = req.params;
+    const { type,content } = req.body;
+    const data = await WriterContent.create({ writer_id,type,content });
     return res.status(200).json({ message: "Succesfully Created" });
 })

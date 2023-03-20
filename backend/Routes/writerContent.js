@@ -1,5 +1,4 @@
 const express = require('express');
-const { getAllWiter, getWriter, cerateWriter, updateWriter, deleteWriter } = require('../Controller/writerController');
 const { authenticateJWT } = require('../Middleware/authentication');
 
 
@@ -7,13 +6,13 @@ const router = express();
 
 //Crud Operations
 
-router.get("/get/AllWriterContent/:writer_id",getAllWriter);
+router.get("/get/AllWriterContent/:writer_id",);
 
-router.post("/create/writerContent/:writer_id",authenticateJWT('ADMIN'),cerateWriter);
+router.post("/create/writerContent/:writer_id",authenticateJWT('ADMIN'),);
 
-router.post("/update/writercontent/:writer_id/:",authenticateJWT('ADMIN'),updateWriter);
+router.post("/update/writercontent/:writer_id/:id",authenticateJWT('ADMIN'),);
 
-router.delete("/delete/writercontent/:writer_id/:id",authenticateJWT('ADMIN'),deleteWriter);
+router.delete("/delete/writercontent/:writer_id/:id",authenticateJWT('ADMIN'),);
 
 
 module.exports = router;

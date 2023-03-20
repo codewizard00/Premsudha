@@ -5,10 +5,11 @@ import List from "../../components/table/Table";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import WriterContent from "../new/WriterContent";
 const View = () => {
   const { id } = useParams()
   const [data, setData] = useState("");
-
+  const [create,setCreate] = useState("");
 
   const datafunc = () => {
     var config = {
@@ -59,8 +60,13 @@ const View = () => {
           </div>
         </div>
         <div className="bottom">
-          <h1 className="title">Last Transactions</h1>
-          <List rows={data?.product_data} />
+          <div style={{display:"flex",justifyContent:"space-between"}}>
+          <h1 className="title">List</h1>
+          {!create && <button onClick={()=>{setCreate(true)}} className="buttons" style={{borderRadius:"10px",backgroundColor:"teal",color:"white",border:"0px solid white", paddingLeft:"20px",paddingRight:"20px"}}>Add New</button>}
+          {create && <button onClick={()=>{setCreate(false)}} className="buttons"style={{borderRadius:"10px",backgroundColor:"teal",color:"white",border:"0px solid white", paddingLeft:"20px",paddingRight:"20px"}}>List</button>}          
+          </div>
+          {create && <WriterContent/>}
+          {!create && <List rows={data?.product_data} />}
         </div>
       </div>
     </div>

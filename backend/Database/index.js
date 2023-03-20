@@ -31,6 +31,7 @@ db.competions = require("./competitionModel")(sequelize, DataTypes);
 db.results = require("./resultModel")(sequelize, DataTypes);
 db.books = require("./bookModel")(sequelize, DataTypes);
 db.banner = require("./bannerModel")(sequelize,DataTypes);
-
+db.writer = require("./writerModel")(sequelize,DataTypes);
+db.writerContent = require("./writerContentModel")(sequelize,DataTypes);
 
 module.exports = db;
