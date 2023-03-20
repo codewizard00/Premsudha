@@ -137,3 +137,38 @@ export const BookColumns = [
     width: 100,
   },
 ];
+
+
+export const writerColumns = [
+  { field: "id", headerName: "ID", width: 70 },
+  {
+    field: "name",
+    headerName: "Full Name",
+    width: 230,
+  },
+  {
+    field: "place",
+    headerName: "Place ",
+    width: 230,
+  },
+  {
+    field: "gender",
+    headerName: "Gender",
+    width: 100,
+  },
+  {
+    field: "image_url",
+    headerName: "Image",
+    width: 160,
+    renderCell: (params) => {
+      return (
+        <img src={params.row.image_url} alt={params.row.image_alt} />
+      );
+    },
+  },
+  {
+    field: "image_alt",
+    headerName: "image_alt",
+    width: 100,
+  },
+];

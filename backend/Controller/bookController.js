@@ -52,9 +52,13 @@ exports.updateBook = catchAsyncError(async (req, res) => {
 
 
 exports.createBook = catchAsyncError(async (req, res) => {
-    const { title, book_image_64,image_alt, about, writer, book_pdf_base64,book_type } = req.body
+    const { title, book_image_64,image_alt, about, writer, book_pdf_base64,book_type,price } = req.body
     const book_image = await Cloudinary(book_image_64, image_alt);
-    const book = await Cloudinary(book_pdf_base64,image_alt+"_pdf");
-    const data = await Books.create({ title, image: book_image.url,url:book.url, image_alt,about,writer,book_type });
+
+    let book;
+    if(book_type==="Book"){
+        book = await Cloudinary(book_pdf_base64,image_alt+"_pdf");
+    }
+    const data = await Books.create({ title, image: book_image.url,url:book.url, image_alt,about,writer,book_type ,price});
     return res.status(200).json({ message: "Succesfully Created" });
 })

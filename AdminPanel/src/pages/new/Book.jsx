@@ -14,6 +14,8 @@ const BookNew = () => {
   const [type, setType] = useState("");
   const [about, setAbout] = useState("");
   const [alt, setAlt] = useState("");
+  const [price, setPrice] = useState("");
+
   const [loader, setLoader] = useState(false)
 
   const getBase64 = file => new Promise((resolve, reject) => {
@@ -36,6 +38,7 @@ const BookNew = () => {
         book_image_64: base1,
         book_pdf_base64: base2,
         book_type: type,
+        price,
       });
 
       var config = {
@@ -59,6 +62,7 @@ const BookNew = () => {
           setWriter("");
           setAlt("");
           setType("");
+          setPrice("")
         })
         .catch(function (error) {
           setLoader(false);
@@ -122,19 +126,21 @@ const BookNew = () => {
                     />
                   </div>
                 </Grid>
-                <Grid item xs={12}>
-                  <div className="formInput">
-                    <label htmlFor="file2">
-                      Book Pdf: <DriveFolderUploadOutlinedIcon className="icon" />
-                    </label>
-                    <input
-                      type="file"
-                      id="file2"
-                      onChange={(e) => setFile2(e.target.files[0])}
-                      style={{ display: "none" }}
-                    />
-                  </div>
-                </Grid>
+                {type == "eBook" &&
+                  <Grid item xs={12}>
+                    <div className="formInput">
+                      <label htmlFor="file2">
+                        Book Pdf: <DriveFolderUploadOutlinedIcon className="icon" />
+                      </label>
+                      <input
+                        type="file"
+                        id="file2"
+                        onChange={(e) => setFile2(e.target.files[0])}
+                        style={{ display: "none" }}
+                      />
+                    </div>
+                  </Grid>
+                }
                 <Grid item xs={6}>
                   <TextField fullWidth variant="outlined" label="Title" type="text" value={title} onChange={(e) => { setTitle(e.target.value) }} />
                 </Grid>
@@ -149,10 +155,15 @@ const BookNew = () => {
                     disablePortal
                     id="combo-box-demo"
                     options={["Book", "eBook"]}
-                    onChange={(event, value) => setType(value)} 
+                    onChange={(event, value) => setType(value)}
                     renderInput={(params) => <TextField fullWidth  {...params} label="Book Type" />}
                   />
                 </Grid>
+                {type == "Book" &&
+                  <Grid item xs={6}>
+                    <TextField fullWidth variant="outlined" label="Price" value={price} onChange={(e) => { setPrice(e.target.value) }} />
+                  </Grid>
+                }
                 <Grid item xs={12}>
                   <TextField multiline rows={4} fullWidth variant="outlined" label="About" value={about} onChange={(e) => { setAbout(e.target.value) }} />
                 </Grid>

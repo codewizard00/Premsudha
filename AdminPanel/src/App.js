@@ -20,6 +20,10 @@ import EmailNew from "./pages/new/Email";
 import Banner from "./pages/list/BannerList";
 import BannerNew from "./pages/new/Banner";
 import BannerSingle from "./pages/single/BannerSingle";
+import WriterSingle from "./pages/single/WriterSingle";
+import WriterList from "./pages/list/WriterList";
+import WriterNew from "./pages/new/WriterNew";
+import View from "./pages/single/View";
 
 function App() {
 
@@ -67,6 +71,18 @@ function App() {
               <Route
                 path="new"
                 element={<BannerNew />}
+              />
+            </Route>
+            <Route path="writer">
+              <Route index element={<WriterList />} />
+              <Route path="single/:writer" element={<WriterSingle />} />
+              <Route
+                path="new"
+                element={<WriterNew />}
+              />
+              <Route
+                path="view/:id"
+                element={<View />}
               />
             </Route>
             <Route path="email">
