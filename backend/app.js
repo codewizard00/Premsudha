@@ -13,6 +13,8 @@ const bookRouter = require("./Routes/bookRoutes");
 const emailRouter = require("./Routes/emailServices");
 const bannerRouter = require("./Routes/bannerRoutes");
 const writerRouter = require("./Routes/writerRoutes");
+const writerContent = require("./Routes/writerContent");
+
 
 app.use("/",userRouter)
 app.use("/",teamRouter)
@@ -21,6 +23,7 @@ app.use("/",bookRouter);
 app.use("/",emailRouter)
 app.use("/",bannerRouter);
 app.use("/",writerRouter);
+app.use("/",writerContent);
 
 
 app.listen(process.env.PORT, () => {

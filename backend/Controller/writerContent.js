@@ -23,7 +23,7 @@ exports.deleteWriterContent = catchAsyncError(async (req, res) => {
     }
 })
 
-exports.updateWriter = catchAsyncError(async (req, res) => {
+exports.updateWriterContent = catchAsyncError(async (req, res) => {
     const { id } = req.params;
     const { writer_id } = req.params;
     const { content,type } = req.body;
@@ -36,9 +36,16 @@ exports.updateWriter = catchAsyncError(async (req, res) => {
     }
 })
 
-exports.cerateWriter = catchAsyncError(async (req, res) => {
+exports.cerateWriterContent = catchAsyncError(async (req, res) => {
     const { writer_id } = req.params;
-    const { type,content } = req.body;
-    const data = await WriterContent.create({ writer_id,type,content });
+    const { type,content,title } = req.body;
+    const data = await WriterContent.create({ writer_id,type,content,title });
     return res.status(200).json({ message: "Succesfully Created" });
+})
+
+
+exports.getWriterType = catchAsyncError(async(req,res)=>{
+    const {writer_id,type} = req.params;
+    const data = await WriterContent.findAll({where:{writer_id,type}});
+    return res.status(200).json({ message: data });
 })

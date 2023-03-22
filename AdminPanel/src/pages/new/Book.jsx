@@ -28,8 +28,11 @@ const BookNew = () => {
     try {
       setLoader(true)
       const base1 = await getBase64(file1);
-      const base2 = await getBase64(file2);
-
+      let base2;
+      if (type === "eBook") {
+        base2 = await getBase64(file2);
+      }
+    
       var data = JSON.stringify({
         title,
         about,

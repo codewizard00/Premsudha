@@ -5,10 +5,11 @@ import { Autocomplete, Grid, TextField } from "@mui/material";
 import toaster from "../../Helper/toaster";
 import { Editor } from '@tinymce/tinymce-react';
 import { useParams } from "react-router-dom";
-const WriterContent = () => {
+const WriterContent = ({ setCreate }) => {
     const { id } = useParams()
     const [content, setContent] = useState("");
     const [type, setType] = useState('');
+    const [title, setTitle] = useState('');
 
     const [loader, setLoader] = useState(false)
 
@@ -44,6 +45,7 @@ const WriterContent = () => {
                     toaster("sucess", "Succesfully Created")
                     setContent("");
                     setType("");
+                    setCreate(false)
                 })
                 .catch(function (error) {
                     setLoader(false);
@@ -68,10 +70,13 @@ const WriterContent = () => {
                         <form>
                             <Grid container spacing={2}>
                                 <Grid item xs={6}>
+                                    <TextField fullWidth label="Title" onChange={(e) => { setTitle(e.target.value) }} />
+                                </Grid>
+                                <Grid item xs={6}>
                                     <Autocomplete
                                         disablePortal
                                         id="combo-box-demo"
-                                        options={[]}
+                                        options={["Poems", "Book"]}
                                         onChange={(event, value) => setType(value)}
                                         renderInput={(params) => <TextField fullWidth  {...params} label="Type" />}
                                     />

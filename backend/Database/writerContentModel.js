@@ -7,6 +7,7 @@ module.exports=((sequelize,DataTypes)=>{
             primaryKey: true
         },
         writer_id:DataTypes.TEXT('long'),
+        title:DataTypes.TEXT('long'),
         content:DataTypes.TEXT('long'),
         type:DataTypes.TEXT('long'),
     })
