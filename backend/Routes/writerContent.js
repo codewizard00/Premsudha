@@ -15,6 +15,6 @@ router.post("/update/writercontent/:writer_id/:id",authenticateJWT('ADMIN'),upda
 
 router.delete("/delete/writercontent/:writer_id/:id",authenticateJWT('ADMIN'),deleteWriterContent);
 
-router.get("/get/writercontent/:writer_id/:type",authenticateJWT('ADMIN'),getWriterType)
+router.get("/get/writercontent/:writer_id/:type",getWriterType)
 
 module.exports = router;
