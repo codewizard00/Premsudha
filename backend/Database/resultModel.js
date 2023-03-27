@@ -7,10 +7,7 @@ module.exports=((sequelize,DataTypes)=>{
             primaryKey: true
         },
         writer:DataTypes.TEXT('long'),
-        writer_img:DataTypes.TEXT('long'),
-        writer_alt:DataTypes.TEXT('long'),
         position:DataTypes.TEXT('long'),
-        place:DataTypes.TEXT('long'),
         certificate:DataTypes.TEXT('long'),
         competition_id:DataTypes.TEXT('long'),
     })

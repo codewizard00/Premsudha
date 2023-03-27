@@ -5,7 +5,7 @@ import { Autocomplete, Grid, TextField } from "@mui/material";
 import toaster from "../../Helper/toaster";
 import { Editor } from '@tinymce/tinymce-react';
 import { useParams } from "react-router-dom";
-const WriterContent = ({ setCreate }) => {
+const CompetionCreate = ({ setCreate }) => {
     const { id } = useParams()
     const [content, setContent] = useState("");
     const [type, setType] = useState('');
@@ -31,7 +31,7 @@ const WriterContent = ({ setCreate }) => {
 
             var config = {
                 method: 'post',
-                url: `${process.env.REACT_APP_PROD_URL}create/writerContent/${id}`,
+                url: `${process.env.REACT_APP_PROD_URL}create/CompetionCreate/${id}`,
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem("adminInfo").replace(/['"]/g, '')}`,
                     'Content-Type': 'application/json'
@@ -131,4 +131,4 @@ const WriterContent = ({ setCreate }) => {
     );
 };
 
-export default WriterContent;
+export default CompetionCreate;

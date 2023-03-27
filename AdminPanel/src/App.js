@@ -24,6 +24,8 @@ import WriterSingle from "./pages/single/WriterSingle";
 import WriterList from "./pages/list/WriterList";
 import WriterNew from "./pages/new/WriterNew";
 import View from "./pages/single/View";
+import 'react-toastify/dist/ReactToastify.css';
+import CompetitionView from "./pages/single/CompetionsView";
 
 function App() {
 
@@ -51,7 +53,7 @@ function App() {
             </Route>
             <Route path="competitions">
               <Route index element={<CompetitionList />} />
-              <Route path="single/:teamid" element={<CompetitionSingle />} />
+              <Route path="single/:id" element={<CompetitionView />} />
               <Route
                 path="new"
                 element={<CompetitionNew />}

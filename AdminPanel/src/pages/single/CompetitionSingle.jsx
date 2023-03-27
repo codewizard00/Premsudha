@@ -103,11 +103,11 @@ const CompetitionSingle = () => {
 
   return (
     <div className="new">
-      <Sidebar />
+  
       <div className="newContainer">
-        <Navbar />
+     
         <Box sx={{ display: "flex", justifyContent: "space-between" }} className="top">
-          <h1>Add New Product</h1>
+          <h1>Edit Competition</h1>
           {!edit &&
             <Button variant="outlined" onClick={() => { setEdit(true) }}>Edit</Button>
           }
