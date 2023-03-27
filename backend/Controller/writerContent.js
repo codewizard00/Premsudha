@@ -5,7 +5,8 @@ const catchAsyncError = require("../Middleware/catchAsyncError");
 const ErrorHandling = require("../Utils/ErrorHandling");
 
 exports.getAllWriterContent = catchAsyncError(async (req, res) => {
-    const data = await WriterContent.findAll();
+    const { writer_id } = req.params;
+    const data = await WriterContent.findAll({writer_id});
     res.status(200).json({ message: data });
 })
 
