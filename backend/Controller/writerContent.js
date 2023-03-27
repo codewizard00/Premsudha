@@ -54,5 +54,6 @@ exports.getWriterType = catchAsyncError(async (req, res) => {
             ]
         }
     });
+    console.log(writer_id,type);
     return res.status(200).json({ message: data });
 })
