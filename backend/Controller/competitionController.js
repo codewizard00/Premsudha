@@ -13,7 +13,7 @@ exports.getAllCompetition = catchAsyncError(async (req, res) => {
 
 exports.getAllCompetitionType = catchAsyncError(async (req, res) => {
     const { type } = req.params;
-    const data = await Competions.findAll({where:{type}});
+    const data = await Competions.findAll({ where: { type } });
     res.status(200).json({ message: data });
 })
 
@@ -40,20 +40,22 @@ exports.deleteCompetition = catchAsyncError(async (req, res) => {
 
 exports.updatateCompetitions = catchAsyncError(async (req, res) => {
     const { id } = req.params;
-    const { title, place, timings, about,keyword ,image_base64, image_alt,type } = req.body;
+    const { title, place, timings, about, keyword, image_base64,image_base64_mobile, image_alt, type } = req.body;
     const data = await Competions.findOne({ where: { id } });
     if (!data) {
         return new ErrorHandling("Data Not Found", 404);
     } else {
         const { url } = await Cloudinary(image_base64, image_alt);
-        const data = await Competions.update({ title,keyword, place, timings, about, image_url: url, image_alt,type }, { where: { id } })
+        const image = await Cloudinary(image_base64_mobile, image_alt+"_mobile");
+        const data = await Competions.update({ title, keyword, place, timings, about, image_url: url,image_mobile_url:image.url, image_alt, type }, { where: { id } })
         return res.status(200).json({ message: "Succesfully Updated" });
     }
 })
 
 exports.createCompetitions = catchAsyncError(async (req, res) => {
-    const { title, place, timings, content, image_alt, image_base64,about,keyword,type } = req.body
+    const { title, place, timings, content, image_alt, image_base64, image_base64_mobile, about, keyword, type } = req.body
     const { url } = await Cloudinary(image_base64, image_alt);
-    const data = await Competions.create({ title, place, timings,keyword ,content, image_url: url, image_alt,about,type });
+    const mobile = await Cloudinary(image_base64_mobile, image_alt+"_mobile");
+    const data = await Competions.create({ title, place, timings, keyword, content, image_url: url, image_mobile_url: mobile.url, image_alt, about, type });
     return res.status(200).json({ message: "Succesfully Created" });
 })

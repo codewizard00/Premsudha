@@ -14,7 +14,6 @@ module.exports=((sequelize,DataTypes)=>{
         url:DataTypes.TEXT('long'),
         book_type:DataTypes.TEXT('long'),
         price:DataTypes.TEXT('long'),
-
     })
     return Books;
 })

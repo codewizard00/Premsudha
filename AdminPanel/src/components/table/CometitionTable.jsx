@@ -9,7 +9,7 @@ import Paper from "@mui/material/Paper";
 import ArrowCircleDownIcon from '@mui/icons-material/ArrowCircleDown';
 
 const CompetitionTable = ({ rows }) => {
-  console.log(rows)
+  
   return (
     <TableContainer component={Paper} className="table">
       <Table sx={{ minWidth: 650 }} aria-label="simple table">

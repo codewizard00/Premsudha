@@ -13,11 +13,13 @@ import parse from 'html-react-parser';
 
 
 const CompetitionSingle = () => {
-  const { teamid } = useParams()
+  const { id } = useParams()
   const [data, setData] = useState();
   const [edit, setEdit] = useState(false);
   const [file1, setFile1] = useState();
   const [imageUrl, setImageUrl] = useState();
+  const [imageUrl2, setImageUrl2] = useState();
+
   const [loader, setLoader] = useState("");
   const [title, setTitle] = useState("");
   const [timings, setTimings] = useState("");
@@ -26,14 +28,15 @@ const CompetitionSingle = () => {
   const [alt, setAlt] = useState("");
   const [about, setAbout] = useState("");
   const [keyword, setKeyowrd] = useState("");
-  const [type,setType] = useState("");
+  const [type, setType] = useState("");
+  const [file2,setFile2] = useState("");
 
   const editorRef = useRef(null);
 
   const datafunc = () => {
     var config = {
       method: 'get',
-      url: `${process.env.REACT_APP_PROD_URL}get/competition/${teamid}`,
+      url: `${process.env.REACT_APP_PROD_URL}get/competition/${id}`,
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${localStorage.getItem("adminInfo").replace(/['"]/g, '')}`
@@ -41,6 +44,7 @@ const CompetitionSingle = () => {
     };
     axios(config)
       .then(function (response) {
+        console.log(response)
         setData(response?.data?.message)
         setTitle(response?.data?.message?.title);
         setPlace(response?.data?.message?.place);
@@ -48,6 +52,7 @@ const CompetitionSingle = () => {
         setContent(response?.data?.message?.content);
         setAlt(response?.data?.message?.image_alt);
         setImageUrl(response?.data?.message?.image_url);
+        setImageUrl2(response?.data?.message?.image_mobile_url);
         setAbout(response?.data?.message?.about);
         setKeyowrd(response?.data?.message?.keyword);
         setType(response?.data?.message?.type);
@@ -84,7 +89,7 @@ const CompetitionSingle = () => {
 
     var config = {
       method: 'post',
-      url: `${process.env.REACT_APP_PROD_URL}update/team/${teamid}`,
+      url: `${process.env.REACT_APP_PROD_URL}update/competition/${id}`,
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${localStorage.getItem("adminInfo").replace(/['"]/g, '')}`
@@ -103,9 +108,7 @@ const CompetitionSingle = () => {
 
   return (
     <div className="new">
-  
       <div className="newContainer">
-     
         <Box sx={{ display: "flex", justifyContent: "space-between" }} className="top">
           <h1>Edit Competition</h1>
           {!edit &&
@@ -115,7 +118,6 @@ const CompetitionSingle = () => {
             <Button variant="outlined" onClick={() => { setEdit(false) }}>Cancel</Button>
           }
         </Box>
-
         <div className="bottom" >
           {loader && <>
             <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
@@ -130,6 +132,7 @@ const CompetitionSingle = () => {
           }
           <div style={{ display: "flex", flexDirection: "column", marginRight: "20px" }}>
             <div className="left">
+          
               <img
                 src={
                   file1
@@ -139,7 +142,18 @@ const CompetitionSingle = () => {
                 alt=""
               />
             </div>
+            <div className="left">
+              <img
+                src={
+                  file2
+                    ? URL.createObjectURL(file2)
+                    : imageUrl2
+                }
+                alt=""
+              />
+            </div>
           </div>
+        
           <div className="right">
             <form>
               {edit ?
@@ -154,6 +168,19 @@ const CompetitionSingle = () => {
                         type="file"
                         id="file1"
                         onChange={(e) => setFile1(e.target.files[0])}
+                        style={{ display: "none" }}
+                      />
+                    </div>
+                  </Grid>
+                  <Grid item xs={12}>
+                    <div className="formInput">
+                      <label htmlFor="file2">
+                        Image Primary: <DriveFolderUploadOutlined className="icon" />
+                      </label>
+                      <input
+                        type="file"
+                        id="file2"
+                        onChange={(e) => setFile2(e.target.files[0])}
                         style={{ display: "none" }}
                       />
                     </div>
@@ -184,7 +211,7 @@ const CompetitionSingle = () => {
                       disablePortal
                       id="combo-box-demo"
                       onChange={(event, value) => setType(value)}
-                      options={['Upcoming-Competitions','Competitions','Blog']}
+                      options={['Upcoming-Competitions', 'Competitions', 'Blog']}
                       renderInput={(params) => <TextField {...params} fullWidth label="Type" />}
                     />
                   </Grid>
@@ -259,10 +286,20 @@ const CompetitionSingle = () => {
                     <TextField disabled fullWidth variant="outlined" label="Image Alt" value={alt} onChange={(e) => { setAlt(e.target.value) }} />
                   </Grid>
                   <Grid item xs={6}>
-                    <TextField fullWidth variant="outlined" label="About" value={about} onChange={(e) => { setAbout(e.target.value) }} />
+                    <TextField fullWidth variant="outlined" label="About" disabled value={about} onChange={(e) => { setAbout(e.target.value) }} />
                   </Grid>
                   <Grid item xs={6}>
-                    <TextField fullWidth variant="outlined" label="Keywords(Seperated By Comma)" value={keyword} onChange={(e) => { setKeyowrd(e.target.value) }} />
+                    <TextField fullWidth variant="outlined" disabled label="Keywords(Seperated By Comma)" value={keyword} onChange={(e) => { setKeyowrd(e.target.value) }} />
+                  </Grid>
+                  <Grid item xs={6}>
+                    <Autocomplete
+                      disablePortal
+                      id="combo-box-demo"
+                      options={["Upcoming-Competitions", "Blog"]}
+                      onChange={(event, value) => setType(value)}
+                      disabled
+                      renderInput={(params) => <TextField fullWidth value={type}   {...params} label="Type" />}
+                    />
                   </Grid>
                   <Grid item xs={12}>
                     {parse(content)}

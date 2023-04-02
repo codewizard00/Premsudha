@@ -9,12 +9,13 @@ import toaster from "../../Helper/toaster";
 import { Editor } from '@tinymce/tinymce-react';
 const CompetiionNew = () => {
     const [file1, setFile1] = useState("");
+    const [file2, setFile2] = useState("");
     const [title, setTitle] = useState("");
     const [timings, setTimings] = useState("");
     const [place, setPlace] = useState("");
     const [content, setContent] = useState("");
     const [alt, setAlt] = useState("");
-    const [type,setType] = useState('');
+    const [type, setType] = useState('');
     const [about, setAbout] = useState("");
     const [keyword, setKeyowrd] = useState("");
     const [loader, setLoader] = useState(false)
@@ -38,6 +39,7 @@ const CompetiionNew = () => {
             log();
             setLoader(true)
             const base1 = await getBase64(file1);
+            const base2 = await getBase64(file2);
             var data = JSON.stringify({
                 title,
                 content,
@@ -45,9 +47,10 @@ const CompetiionNew = () => {
                 place,
                 image_alt: alt,
                 image_base64: base1,
+                image_base64_mobile:base2,
                 about,
                 keyword,
-                type
+                type,
             });
 
             var config = {
@@ -118,7 +121,19 @@ const CompetiionNew = () => {
                                 alt=""
                             />
                         </div>
+                        <div className="left">
+                            <img
+
+                                src={
+                                    file2
+                                        ? URL.createObjectURL(file2)
+                                        : "https://icon-library.com/images/no-image-icon/no-image-icon-0.jpg"
+                                }
+                                alt=""
+                            />
+                        </div>
                     </div>
+
                     <div className="right">
                         <form>
                             <Grid container spacing={2}>
@@ -131,6 +146,19 @@ const CompetiionNew = () => {
                                             type="file"
                                             id="file1"
                                             onChange={(e) => setFile1(e.target.files[0])}
+                                            style={{ display: "none" }}
+                                        />
+                                    </div>
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <div className="formInput">
+                                        <label htmlFor="file2">
+                                            Image Primary Mobile: <DriveFolderUploadOutlinedIcon className="icon" />
+                                        </label>
+                                        <input
+                                            type="file"
+                                            id="file2"
+                                            onChange={(e) => setFile2(e.target.files[0])}
                                             style={{ display: "none" }}
                                         />
                                     </div>

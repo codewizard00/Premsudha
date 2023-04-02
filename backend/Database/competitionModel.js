@@ -12,6 +12,7 @@ module.exports = ((sequelize, DataTypes) => {
         content: DataTypes.TEXT('long'),
         about:DataTypes.TEXT('long'),
         image_url: DataTypes.TEXT('long'),
+        image_mobile_url: DataTypes.TEXT('long'),
         image_alt: DataTypes.TEXT('long'),
         keyword: DataTypes.TEXT('long'),
         type: DataTypes.TEXT('long'),

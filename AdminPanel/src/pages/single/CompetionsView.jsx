@@ -8,30 +8,9 @@ import CompetitionSingle from "./CompetitionSingle";
 import CompetitionTable from "../../components/table/CometitionTable";
 import Result from "../new/Results";
 const CompetitionView = () => {
-  const { id } = useParams()
-  const [data, setData] = useState("");
+  const { id } = useParams();
   const [data1, setData1] = useState("");
-
-
   const [create, setCreate] = useState("");
-
-  const datafunc = () => {
-    var config = {
-      method: 'get',
-      url: `${process.env.REACT_APP_PROD_URL}get/writer/${id}`,
-      headers: {
-        'Authorization': `Bearer ${localStorage?.getItem("adminInfo")?.split('"')[3]}`
-      }
-    };
-    axios(config)
-      .then(function (response) {
-        setData(response.data.message)
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-  }
-
 
   const getData = () => {
     var config = {
@@ -51,7 +30,6 @@ const CompetitionView = () => {
   }
   useEffect(() => {
     getData();
-    datafunc()
   }, [])
 
 
@@ -60,7 +38,7 @@ const CompetitionView = () => {
       <Sidebar />
       <div className="singleContainer">
         <Navbar />
-        <CompetitionSingle/>
+        <CompetitionSingle />
         <div className="bottom">
           <div style={{ display: "flex", justifyContent: "space-between" }}>
             <h1 className="title">List</h1>
