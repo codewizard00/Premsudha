@@ -1,11 +1,9 @@
 const express = require("express");
 const app = express();
-const cors = require("cors")
 const dotenv = require('dotenv')
 dotenv.config({ path: "Config/config.env" })
 require("./Database/index")
 app.use(express.json({ limit: "50mb", extended: 'true' }))
-app.use(cors());
 const userRouter = require("./Routes/userRoute");
 const teamRouter = require("./Routes/teamRoute");
 const competionRouter = require("./Routes/competionRoutes");
@@ -15,7 +13,12 @@ const bannerRouter = require("./Routes/bannerRoutes");
 const writerRouter = require("./Routes/writerRoutes");
 const writerContent = require("./Routes/writerContent");
 const resultRouter = require("./Routes/resultRoutes");
-app.use(express.limit('10mb'));
+
+const cors = require('cors');
+app.use(cors());
+var bodyParser = require('body-parser');
+app.use(bodyParser.json({limit: '50mb'}));
+app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
 app.use("/", userRouter)
 app.use("/", teamRouter)
 app.use("/", competionRouter)
