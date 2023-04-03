@@ -2,10 +2,11 @@ import "./new.scss";
 import Sidebar from "../../components/sidebar/Sidebar";
 import Navbar from "../../components/navbar/Navbar";
 import DriveFolderUploadOutlinedIcon from "@mui/icons-material/DriveFolderUploadOutlined";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import axios from "axios";
 import { Autocomplete, Backdrop, CircularProgress, Grid, TextField } from "@mui/material";
 import toaster from "../../Helper/toaster";
+import { Editor } from "@tinymce/tinymce-react";
 const BannerNew = () => {
     const [file1, setFile1] = useState("");
     const [file2, setFile2] = useState("");
@@ -13,6 +14,15 @@ const BannerNew = () => {
     const [alt, setAlt] = useState("");
     const [loader, setLoader] = useState(false)
     const [about, setAbout] = useState('');
+
+    const log = () => {
+        if (editorRef.current) {
+            setAbout(editorRef.current.getContent())
+       
+        }
+    };
+    const editorRef = useRef(null);
+
     const getBase64 = file => new Promise((resolve, reject) => {
         const reader = new FileReader();
         reader.readAsDataURL(file);
@@ -21,7 +31,8 @@ const BannerNew = () => {
     });
     const submit = async () => {
         try {
-            setLoader(true)
+            log();
+            setLoader(true);
             const base1 = await getBase64(file1);
             const base2 = await getBase64(file2);
             var data = JSON.stringify({
@@ -29,7 +40,7 @@ const BannerNew = () => {
                 image_alt: alt,
                 image_base_64: base1,
                 image_base_64_mobile: base2,
-                about:about
+                about: about
             });
 
             var config = {
@@ -139,7 +150,7 @@ const BannerNew = () => {
                                     <Autocomplete
                                         disablePortal
                                         id="combo-box-demo"
-                                        options={["Home-Carousel", "Gallery-Carousel", "Event-Gallery","Aaj-Ka-Rachnakaar"]}
+                                        options={["Home-Carousel", "Gallery-Carousel", "Event-Gallery", "Aaj-Ka-Rachnakaar"]}
                                         onChange={(event, value) => setBannerType(value)}
                                         renderInput={(params) => <TextField fullWidth  {...params} label="Type" />}
                                     />
@@ -147,9 +158,47 @@ const BannerNew = () => {
                                 <Grid item xs={6}>
                                     <TextField fullWidth variant="outlined" label="Image Alt" value={alt} onChange={(e) => { setAlt(e.target.value) }} />
                                 </Grid>
-                                <Grid item xs={6}>
-                                    <TextField fullWidth variant="outlined" label="About" value={about} onChange={(e) => { setAbout(e.target.value) }} />
+                                <Grid item xs={12}>
+                                    <Editor
+                                        apiKey='p2qose3sr3783k8d9elgdbdni9cty8bvlj6aa1ct899o5722'
+                                        onInit={(evt, editor) => editorRef.current = editor}
+                                        initialValue="<p>Your Summary Here.</p>"
+                                        onEditorChange={(curContent, editor) => setAbout(curContent)}
+                                        init={{
+                                            height: 500,
+                                            plugins: [
+                                                'advlist', 'imageupload', 'autolink', 'lists', 'link', 'image', 'charmap', 'preview',
+                                                'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',
+                                                'insertdatetime', 'media', 'table', 'help', 'wordcount'
+                                            ],
+                                            toolbar: 'undo redo | blocks | ' + 'imageupload' +
+                                                'bold italic backcolor | alignleft aligncenter ' +
+                                                'alignright alignjustify | bullist numlist outdent indent | ' +
+                                                'removeformat | help',
+                                            content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
+                                            file_picker_callback: function (callback, value, meta) {
+                                                if (meta.filetype == 'image') {
+                                                    var input = document.getElementById('my-file');
+                                                    input.click();
+                                                    input.onchange = function () {
+                                                        var file = input.files[0];
+                                                        var reader = new FileReader();
+                                                        reader.onload = function (e) {
+                                                            callback(e.target.result, {
+                                                                alt: file.name
+                                                            });
+                                                        };
+                                                        reader.readAsDataURL(file);
+                                                    };
+                                                }
+                                            }
+                                        }}
+                                    />
+                                    <input id="my-file" type="file" name="my-file" style={{ display: "none" }} onchange="" />
                                 </Grid>
+                                {/* <Grid item xs={6}>
+                                    <TextField fullWidth variant="outlined" label="About" value={about} onChange={(e) => { setAbout(e.target.value) }} />
+                                </Grid> */}
 
                                 <Grid item xs={12}>
                                     <button type="button" onClick={() => { submit() }}>Send</button>
