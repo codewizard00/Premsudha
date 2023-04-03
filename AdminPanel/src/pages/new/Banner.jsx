@@ -8,10 +8,11 @@ import { Autocomplete, Backdrop, CircularProgress, Grid, TextField } from "@mui/
 import toaster from "../../Helper/toaster";
 const BannerNew = () => {
     const [file1, setFile1] = useState("");
+    const [file2, setFile2] = useState("");
     const [bannerType, setBannerType] = useState("");
     const [alt, setAlt] = useState("");
     const [loader, setLoader] = useState(false)
-
+    const [about, setAbout] = useState('');
     const getBase64 = file => new Promise((resolve, reject) => {
         const reader = new FileReader();
         reader.readAsDataURL(file);
@@ -22,10 +23,13 @@ const BannerNew = () => {
         try {
             setLoader(true)
             const base1 = await getBase64(file1);
+            const base2 = await getBase64(file2);
             var data = JSON.stringify({
                 banner_type: bannerType,
                 image_alt: alt,
                 image_base_64: base1,
+                image_base_64_mobile: base2,
+                about:about
             });
 
             var config = {
@@ -49,7 +53,7 @@ const BannerNew = () => {
                 .catch(function (error) {
                     setLoader(false);
                     toaster("error", "Something Went Wrong")
-                    console.log(error);
+
                 });
         }
         catch (err) {
@@ -64,7 +68,7 @@ const BannerNew = () => {
             <div className="newContainer">
                 <Navbar />
                 <div className="top">
-                    <h1>Add New Product</h1>
+                    <h1>Add New Banner</h1>
                 </div>
 
                 <div className="bottom" >
@@ -91,6 +95,16 @@ const BannerNew = () => {
                                 alt=""
                             />
                         </div>
+                        <div className="left">
+                            <img
+                                src={
+                                    file2
+                                        ? URL.createObjectURL(file2)
+                                        : "https://icon-library.com/images/no-image-icon/no-image-icon-0.jpg"
+                                }
+                                alt=""
+                            />
+                        </div>
                     </div>
                     <div className="right">
                         <form>
@@ -108,11 +122,24 @@ const BannerNew = () => {
                                         />
                                     </div>
                                 </Grid>
+                                <Grid item xs={12}>
+                                    <div className="formInput">
+                                        <label htmlFor="file2">
+                                            Image Primary Mobile: <DriveFolderUploadOutlinedIcon className="icon" />
+                                        </label>
+                                        <input
+                                            type="file"
+                                            id="file2"
+                                            onChange={(e) => setFile2(e.target.files[0])}
+                                            style={{ display: "none" }}
+                                        />
+                                    </div>
+                                </Grid>
                                 <Grid item xs={6}>
                                     <Autocomplete
                                         disablePortal
                                         id="combo-box-demo"
-                                        options={["Home-Carousel","Gallery-Carousel","Event-Gallery"]}
+                                        options={["Home-Carousel", "Gallery-Carousel", "Event-Gallery","Aaj-Ka-Rachnakaar"]}
                                         onChange={(event, value) => setBannerType(value)}
                                         renderInput={(params) => <TextField fullWidth  {...params} label="Type" />}
                                     />
@@ -120,6 +147,10 @@ const BannerNew = () => {
                                 <Grid item xs={6}>
                                     <TextField fullWidth variant="outlined" label="Image Alt" value={alt} onChange={(e) => { setAlt(e.target.value) }} />
                                 </Grid>
+                                <Grid item xs={6}>
+                                    <TextField fullWidth variant="outlined" label="About" value={about} onChange={(e) => { setAbout(e.target.value) }} />
+                                </Grid>
+
                                 <Grid item xs={12}>
                                     <button type="button" onClick={() => { submit() }}>Send</button>
                                 </Grid>

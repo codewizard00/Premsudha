@@ -12,12 +12,14 @@ const BannerSingle = () => {
     const { bannerId } = useParams()
     const [data, setData] = useState();
     const [edit, setEdit] = useState(false);
-    const [loader,setLoader] = useState(false);
+    const [loader, setLoader] = useState(false);
     const [file1, setFile1] = useState();
+    const [file2, setFile2] = useState();
     const [imageUrl, setImageUrl] = useState();
+    const [imageUrl2, setImageUrl2] = useState();
     const [bannerType, setBannerType] = useState("");
     const [alt, setAlt] = useState("")
-
+    const [about, setAbout] = useState("")
 
     const datafunc = () => {
         var config = {
@@ -34,6 +36,8 @@ const BannerSingle = () => {
                 setBannerType(response?.data?.message?.banner_type)
                 setAlt(response?.data?.message?.image_alt);
                 setImageUrl(response?.data?.message?.image_url);
+                setImageUrl2(response?.data?.message?.image_url2);
+                setAbout(response?.data?.message?.about)
             })
             .catch(function (error) {
                 console.log(error);
@@ -53,10 +57,13 @@ const BannerSingle = () => {
     const submit = async () => {
         setLoader(true);
         const base64 = file1 ? await getBase64(file1) : imageUrl;
+        const base64_mobile = file2 ? await getBase64(file2) : imageUrl2;
         var data = JSON.stringify({
             banner_type: bannerType,
             image_alt: alt,
             image_base64: base64,
+            image_base64_mobile: base64_mobile,
+            about: about,
         });
 
         var config = {
@@ -84,7 +91,7 @@ const BannerSingle = () => {
             <div className="newContainer">
                 <Navbar />
                 <Box sx={{ display: "flex", justifyContent: "space-between" }} className="top">
-                    <h1>Add New Product</h1>
+                    <h1>Edit Banner</h1>
                     {!edit &&
                         <Button variant="outlined" onClick={() => { setEdit(true) }}>Edit</Button>
                     }
@@ -135,12 +142,30 @@ const BannerSingle = () => {
                                             />
                                         </div>
                                     </Grid>
+                                    <Grid item xs={12}>
+                                        <div className="formInput">
+                                            <label htmlFor="file2">
+                                                Image Primary: <DriveFolderUploadOutlined className="icon" />
+                                            </label>
+                                            <input
+
+                                                type="file"
+                                                id="file2"
+                                                onChange={(e) => setFile2(e.target.files[0])}
+                                                style={{ display: "none" }}
+                                            />
+                                        </div>
+                                    </Grid>
                                     <Grid item xs={6}>
-                                        <TextField fullWidth disabled variant="outlined" label="Banner Type" value={bannerType} onChange={(e) => { setBannerType(e.target.value) }} />
+                                        <TextField fullWidth variant="outlined" label="Banner Type" value={bannerType} onChange={(e) => { setBannerType(e.target.value) }} />
                                     </Grid>
 
                                     <Grid item xs={6}>
-                                        <TextField fullWidth disabled variant="outlined" label="Image Alt" value={alt} onChange={(e) => { setAlt(e.target.value) }} />
+                                        <TextField fullWidth variant="outlined" label="Image Alt" value={alt} onChange={(e) => { setAlt(e.target.value) }} />
+                                    </Grid>
+
+                                    <Grid item xs={6}>
+                                        <TextField fullWidth variant="outlined" label="About" value={about} onChange={(e) => { setAbout(e.target.value) }} />
                                     </Grid>
 
                                     <Grid item xs={12}>
@@ -163,18 +188,29 @@ const BannerSingle = () => {
                                             />
                                         </div>
                                     </Grid>
+                                    <Grid item xs={12}>
+                                        <div className="formInput">
+                                            <label htmlFor="file1">
+                                                Image Primary Mobile: <DriveFolderUploadOutlined className="icon" />
+                                            </label>
+                                            <input
+                                                disabled
+                                                type="file"
+                                                id="file2"
+                                                onChange={(e) => setFile2(e.target.files[0])}
+                                                style={{ display: "none" }}
+                                            />
+                                        </div>
+                                    </Grid>
                                     <Grid item xs={6}>
                                         <TextField fullWidth disabled variant="outlined" label="Banner Type" value={bannerType} onChange={(e) => { bannerType(e.target.value) }} />
                                     </Grid>
-
                                     <Grid item xs={6}>
                                         <TextField fullWidth disabled variant="outlined" label="Image Alt" value={alt} onChange={(e) => { setAlt(e.target.value) }} />
                                     </Grid>
-
-
-                                    {/* <Grid item xs={6}>
-                  <button type="button" onClick={() => { submit() }}>Send</button>
-                </Grid> */}
+                                    <Grid item xs={6}>
+                                        <TextField fullWidth disabled variant="outlined" label="About" value={about} onChange={(e) => { setAbout(e.target.value) }} />
+                                    </Grid>
                                 </Grid>
                             }
                         </form>
