@@ -15,7 +15,7 @@ const bannerRouter = require("./Routes/bannerRoutes");
 const writerRouter = require("./Routes/writerRoutes");
 const writerContent = require("./Routes/writerContent");
 const resultRouter = require("./Routes/resultRoutes");
-
+app.use(express.limit('10mb'));
 app.use("/", userRouter)
 app.use("/", teamRouter)
 app.use("/", competionRouter)
