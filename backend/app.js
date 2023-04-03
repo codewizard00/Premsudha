@@ -1,13 +1,13 @@
 const express = require("express");
 const app = express();
+
+app.use(express.json({limit: "10mb", extended: true}))
+app.use(express.urlencoded({limit: "10mb", extended: true, parameterLimit: 50000}))
 const dotenv = require('dotenv')
 dotenv.config({ path: "Config/config.env" })
 require("./Database/index")
 const cors = require('cors');
 app.use(cors());
-var bodyParser = require('body-parser');
-app.use(bodyParser.json({limit: '50mb'}));
-app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
 const userRouter = require("./Routes/userRoute");
 const teamRouter = require("./Routes/teamRoute");
 const competionRouter = require("./Routes/competionRoutes");
