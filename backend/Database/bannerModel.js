@@ -10,7 +10,8 @@ module.exports = ((sequelize, DataTypes) => {
         image_mobile_url: DataTypes.TEXT('long'),
         image_alt: DataTypes.TEXT('long'),
         banner_type: DataTypes.TEXT('long'),
-        banner_about:DataTypes.TEXT('long')
+        banner_about:DataTypes.TEXT('long'),
+        banner_about:DataTypes.TEXT('long'),
     })
     return Books;
 })

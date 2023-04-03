@@ -170,9 +170,13 @@ const BookSingle = () => {
                   <Grid item xs={6}>
                     <TextField fullWidth disabled variant="outlined" label="Image Alt" value={alt} onChange={(e) => { setAlt(e.target.value) }} />
                   </Grid>
+                  <Grid item xs={6}>
+                    <TextField fullWidth disabled variant="outlined" label="Price" value={alt} onChange={(e) => { setAlt(e.target.value) }} />
+                  </Grid>
                   <Grid item xs={12}>
                     <TextField multiline rows={4} fullWidth variant="outlined" label="About" value={about} onChange={(e) => { setAbout(e.target.value) }} />
                   </Grid>
+                  
                   <Grid item xs={12}>
                     <button type="button" onClick={() => { submit() }}>Send</button>
                   </Grid>
