@@ -197,7 +197,7 @@ const CompetiionNew = () => {
                                     <Autocomplete
                                         disablePortal
                                         id="combo-box-demo"
-                                        options={["Upcoming-Competitions", "Blog"]}
+                                        options={["Upcoming-Competitions","Competitions", "Blog",]}
                                         onChange={(event, value) => setType(value)}
                                         renderInput={(params) => <TextField fullWidth  {...params} label="Type" />}
                                     />
