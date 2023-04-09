@@ -1,6 +1,4 @@
 import "./single.scss";
-import Sidebar from "../../components/sidebar/Sidebar";
-import Navbar from "../../components/navbar/Navbar";
 import { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Autocomplete, Backdrop, Button, CircularProgress, Grid, TextField } from "@mui/material";
@@ -75,6 +73,7 @@ const CompetitionSingle = () => {
   const submit = async () => {
     setLoader(true);
     const base64 = file1 ? await getBase64(file1) : imageUrl;
+    const base64_mobile = file2 ? await getBase64(file2) : imageUrl;
     var data = JSON.stringify({
       title,
       place,
@@ -82,6 +81,7 @@ const CompetitionSingle = () => {
       content,
       image_alt: alt,
       image_base64: base64,
+      image_base64_mobile:base64_mobile,
       about,
       keyword,
       type
@@ -175,7 +175,7 @@ const CompetitionSingle = () => {
                   <Grid item xs={12}>
                     <div className="formInput">
                       <label htmlFor="file2">
-                        Image Primary: <DriveFolderUploadOutlined className="icon" />
+                        Image Primary Moboile: <DriveFolderUploadOutlined className="icon" />
                       </label>
                       <input
                         type="file"
@@ -198,13 +198,13 @@ const CompetitionSingle = () => {
                     <TextField fullWidth disabled variant="outlined" label="Image Alt" value={alt} onChange={(e) => { setAlt(e.target.value) }} />
                   </Grid>
                   <Grid item xs={6}>
-                    <TextField fullWidth disabled variant="outlined" label="About" value={about} onChange={(e) => { setAbout(e.target.value) }} />
+                    <TextField fullWidth variant="outlined" label="About" value={about} onChange={(e) => { setAbout(e.target.value) }} />
                   </Grid>
                   <Grid item xs={6}>
-                    <TextField fullWidth disabled variant="outlined" label="About" value={about} onChange={(e) => { setAbout(e.target.value) }} />
+                    <TextField fullWidth variant="outlined" label="About" value={about} onChange={(e) => { setAbout(e.target.value) }} />
                   </Grid>
                   <Grid item xs={6}>
-                    <TextField fullWidth disabled variant="outlined" label="Keywords(Seperated By Comma)" value={keyword} onChange={(e) => { setKeyowrd(e.target.value) }} />
+                    <TextField fullWidth variant="outlined" label="Keywords(Seperated By Comma)" value={keyword} onChange={(e) => { setKeyowrd(e.target.value) }} />
                   </Grid>
                   <Grid item xs={6}>
                     <Autocomplete

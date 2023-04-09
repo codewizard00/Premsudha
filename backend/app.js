@@ -2,8 +2,8 @@ const express = require("express");
 const app = express();
 const cors = require('cors');
 app.use(cors());
-app.use(express.json({limit: "10mb", extended: true}))
-app.use(express.urlencoded({limit: "10mb", extended: true, parameterLimit: 50000}))
+app.use(express.json({limit: "20mb", extended: true}))
+app.use(express.urlencoded({limit: "20mb", extended: true, parameterLimit: 50000}))
 const dotenv = require('dotenv')
 dotenv.config({ path: "Config/config.env" })
 require("./Database/index")

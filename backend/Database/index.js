@@ -1,7 +1,7 @@
 const { Sequelize, DataTypes } = require("sequelize");
 
 const sequelize = new Sequelize(process.env.DBNAME, process.env.DBHOSTNAME, process.env.DBPASSWORD, {
-    host: "database-1.cuopifprbbm4.ap-south-1.rds.amazonaws.com",
+    host: "localhost",
     port:"3306",
     dialect: "mysql",
     logging: false,

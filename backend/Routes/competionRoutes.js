@@ -11,7 +11,7 @@ router.get('/get/competition/:id',getCompetition)
 
 router.post('/create/competition', authenticateJWT('ADMIN'), createCompetitions);
 
-router.put('/update/competition/:id',authenticateJWT('ADMIN'),updatateCompetitions);
+router.post('/update/competition/:id',authenticateJWT('ADMIN'),updatateCompetitions);
 
 router.delete('/delete/competition/:id',authenticateJWT('ADMIN'),deleteCompetition);
 
