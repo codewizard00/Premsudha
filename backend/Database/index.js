@@ -1,7 +1,7 @@
 const { Sequelize, DataTypes } = require("sequelize");
 
 const sequelize = new Sequelize(process.env.DBNAME, process.env.DBHOSTNAME, process.env.DBPASSWORD, {
-    host: "localhost",
+    host: "database-1.cuopifprbbm4.ap-south-1.rds.amazonaws.com",
     port:"3306",
     dialect: "mysql",
     logging: false,
@@ -19,7 +19,6 @@ sequelize.authenticate()
 const db = {};
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
-
 db.sequelize.sync({ alter: true, match: /Premsudha$/ })
     .then(() => {
         console.log("yes re-sync");
